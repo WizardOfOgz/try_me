@@ -1,11 +1,24 @@
 require 'spec_helper'
 
 describe TryMe do
-  it 'has a version number' do
-    expect(TryMe::VERSION).not_to be nil
-  end
+  describe "#try_me" do
+    it do
+      actual = "bird".try_me { zzz | yyy | upcase }
+      expected = "BIRD"
+      expect(actual).to eq(expected)
+    end
 
-  it 'does something useful' do
-    expect(false).to eq(true)
+    it "allows methods to return nil" do
+      klass = Class.new do
+        def foo; end  # Returns nil
+
+        def bar
+          :not_nil
+        end
+      end
+
+      actual = klass.new.try_me { zzz | foo | bar }  # Should return the value from `foo`.
+      expect(actual).to be_nil
+    end
   end
 end

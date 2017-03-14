@@ -39,5 +39,6 @@ module TryMe
       end
     end
   end
-
 end
+
+Object.include TryMe
